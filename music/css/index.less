@@ -1,0 +1,541 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+    color: #fff;
+}
+
+.box {
+    width: 700px;
+    height: 500px;
+    // background-color: pink;
+    background-image: url(../images/陈粒1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 1s;
+    outline: 1px solid #2eace4;
+    overflow: hidden;
+
+    // 切换按钮
+    .change-container {
+        margin-top: 10px;
+        width: 100px;
+        height: 24px;
+        border-radius: 12px;
+        // background-color: yellow;
+        display: flex;
+        justify-content: space-evenly;
+        position: relative;
+
+        span {
+            display: block;
+            content: '';
+            width: 50px;
+            height: 24px;
+            background-color: #fff;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border-radius: 24px;
+            transition: 1s;
+        }
+
+        p {
+            text-align: center;
+            line-height: 24px;
+            width: 50px;
+            height: 100%;
+            user-select: none;
+            color: black;
+            cursor: pointer;
+            z-index: 1;
+            // &:nth-child(1) {
+            //     border-radius: 12px;
+            //     background-color: #fff;
+            // }
+
+            // &:nth-child(2) {
+            //     border-radius: 12px;
+            //     // background-color: rgb(228, 217, 217);
+            // }
+        }
+    }
+
+    // 内容区域
+    .item-container {
+        width: 700px;
+        height: 320px;
+        margin-top: 40px;
+        position: relative;
+        perspective: 800px;
+
+        // 显示歌曲信息
+        .song-msg {
+            position: absolute;
+            width: 700px;
+            height: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+            z-index: 100;
+            // background-color: red;
+            transition: 2s;
+
+            // z-index: 100;
+            .song-name {
+                font-size: 18px;
+
+            }
+
+            .singer {
+                font-size: 14px;
+                opacity: 0.6;
+            }
+        }
+
+        // 歌词部分
+        .lyrics-container {
+            width: 700px;
+            height: 320px;
+            // background-color: yellow;
+            position: absolute;
+            transform-style: preserve-3d;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            backface-visibility: hidden;
+            transition: 2s;
+            transform: rotateY(270deg);
+
+            // position: relative;
+            ul {
+                width: 700px;
+                padding-top: 150px;
+                overflow: auto;
+
+                li {
+                    text-align: center;
+                    height: 24px;
+                    line-height: 24px;
+                    position: relative;
+                    user-select: none;
+                    margin-bottom: 10px;
+                    position: relative;
+                    transition: 1s;
+
+                    &.active {
+                        color: #2eace4;
+                        font-size: 18px;
+
+                    }
+
+                    &:hover span {
+                        display: block;
+                    }
+
+                    span {
+                        width: 100%;
+                        height: 24px;
+                        display: none;
+                        position: absolute;
+                        // background-color: #ddd;
+                        // opacity: .1;
+                        left: 0;
+                        top: 0;
+
+                        i {
+                            position: absolute;
+                            width: 24px;
+                            height: 24px;
+                            line-height: 24px;
+                            text-align: center;
+                            border: 1px solid #2eace4;
+                            border-radius: 999px;
+                            color: #2eace4;
+                            cursor: pointer;
+                            left: 10px;
+                            top: 0;
+                            z-index: 100;
+                        }
+                    }
+                }
+            }
+
+            ul::-webkit-scrollbar {
+                display: none;
+            }
+        }
+    }
+
+
+    // 进度条
+    .bar {
+        margin-top: 46px;
+        width: 100%;
+        height: 5px;
+        background-color: gray;
+        border-radius: 1px;
+        position: relative;
+        cursor: pointer;
+
+        .rate {
+            position: absolute;
+            width: 3px;
+            height: 5px;
+            border-radius: 5px;
+            cursor: move;
+            background-color: #2eace4;
+        }
+    }
+
+    // 功能区域
+    .control-container {
+        margin-top: 1px;
+        width: 100%;
+        height: 50px;
+        background-color: transparent;
+        display: flex;
+        justify-content: space-between;
+
+        // 左边区域
+        .left {
+            width: 25%;
+            height: 100%;
+            display: flex;
+
+            // justify-content: space-between;
+            .img-box {
+                margin-left: 2px;
+                width: 50px;
+                height: 50px;
+                // padding: 5px;
+                border-radius: 999px;
+                overflow: hidden;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    display: block;
+                    // animation: move 5s linear;
+                    animation-iteration-count: infinite;
+                }
+            }
+
+            .song-msg-box {
+                width: calc(100% - 54px);
+                margin-left: 5px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+
+                p {
+                    font-size: 14px;
+                    user-select: none;
+                }
+
+                .other-box {
+                    height: 20px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    text-align: center;
+
+                    // background-color: #2eace4;
+                    i {
+                        width: 20px;
+                        height: 20px;
+                        line-height: 20px;
+                        cursor: pointer;
+
+                        &:nth-child(1) {
+                            font-size: 14px;
+                        }
+
+                        &:hover {
+                            color: #2eace4;
+                        }
+                    }
+                }
+            }
+        }
+
+        //中间区域
+        .middle {
+            width: 30%;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+            i {
+                width: 20px;
+                height: 20px;
+                font-size: 18px;
+                cursor: pointer;
+
+                &:hover {
+                    color: #2eace4;
+                }
+            }
+        }
+
+        // 右边区域
+        .right {
+            width: 30%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .lyrics-control {
+                width: 20px;
+                height: 20px;
+                margin-bottom: 2px;
+                text-align: center;
+                line-height: 20px;
+                font-size: 14px;
+                user-select: none;
+                cursor: pointer;
+
+                &:hover {
+                    color: #2eace4;
+                }
+
+                &.active {
+                    color: #2eace4;
+                }
+            }
+
+            .time {
+                font-size: 14px;
+                color: gray;
+                user-select: none;
+                opacity: 0.6;
+            }
+
+            i {
+                width: 20px;
+                height: 20px;
+                font-size: 18px;
+                cursor: pointer;
+
+                &:hover {
+                    color: #2eace4;
+                }
+            }
+
+            .sound-container {
+                position: relative;
+                &:hover .sound{
+                    display: block;
+                }
+                .sound {
+                    width: 40px;
+                    height: 140px;
+                    background-color: #ffffff;
+                    border-radius: 5px;
+                    position: absolute;
+                    left: -10px;
+                    bottom: 32px;
+                    display: none;
+                    &::after{
+                        content: '';
+                        border: 8px solid #fff;
+                        position: absolute;
+                        border-left-color: transparent;
+                        border-right-color: transparent;
+                        border-bottom-color: transparent;
+                        left: 12px;
+                        bottom: -16px;
+                    }
+                    input[type=range] {
+                        /* margin-top: 100px; */
+                        outline: none;
+                        -webkit-appearance: none;
+                        /*清除系统默认样式*/
+                        width: 100px;
+                        background: -webkit-linear-gradient(#35c1ff, #35c1ff) no-repeat, #ddd;
+                        background-size: 100% 100%;
+                        /*设置左右宽度比例*/
+                        height: 4px;
+                        /* width: 100px; */
+                        /*横条的高度*/
+                        transform: translate(-30px,35px) rotateZ(270deg);
+
+                    }
+
+                    /*拖动块的样式*/
+                    input[type=range]::-webkit-slider-thumb {
+                        -webkit-appearance: none;
+                        /*清除系统默认样式*/
+                        height: 16px;
+                        /*拖动块高度*/
+                        width: 16px;
+                        /*拖动块宽度*/
+                        background: #fff;
+                        /*拖动块背景*/
+                        border-radius: 50%;
+                        /*外观设置为圆形*/
+                        border: solid 1px #ddd;
+                        /*设置边框*/
+                    }
+
+                    span {
+                        text-align: center;
+                        font-size: 14px;
+                        color: #999;
+                        display: block;
+                        transform: translate(1px, 120px);
+
+                    }
+                }
+            }
+        }
+    }
+
+    // 歌曲列表
+    .song-list {
+        width: 250px;
+        height: 400px;
+        background-color: #fff;
+        padding: 0 2px;
+        position: absolute;
+        top: 44px;
+        right: 0;
+        transition: 1s;
+        border-radius: 5px;
+        transform: translateX(100%);
+
+        // 播放列表
+        .list-one {
+            width: 100%;
+            height: 100%;
+
+            .title {
+                width: 100%;
+                height: 35px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                user-select: none;
+
+                .left {
+                    display: flex;
+                    align-items: center;
+
+                    h1 {
+                        font-size: 20px;
+                        font-weight: 500;
+                        color: black;
+                    }
+
+                    p {
+                        font-size: 12px;
+                        color: #ddd;
+                        padding-top: 10px;
+                        padding-left: 5px;
+                    }
+                }
+
+                .right {
+                    width: 80px;
+                    display: flex;
+                    justify-content: space-between;
+
+                    span {
+                        cursor: pointer;
+                        color: gray;
+
+                        &:hover {
+                            color: #2eace4;
+                        }
+                    }
+
+                    p {
+                        cursor: pointer;
+                        color: black;
+
+                        &:hover {
+                            color: #2eace4;
+                        }
+                    }
+                }
+            }
+
+            ul {
+                width: 100%;
+                height: 360px;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+
+                li {
+                    display: flex;
+                    align-items: center;
+                    height: 28px;
+                    padding: 2px 0;
+                    justify-content: space-between;
+                    font-size: 14px;
+                    background-color: #f0f0f0cf;
+                    margin-bottom: 2px;
+                    user-select: none;
+                    cursor: pointer;
+
+                    * {
+                        color: black;
+                    }
+
+                    i {
+                        width: 24px;
+                        height: 24px;
+                        padding: 2px;
+                    }
+
+                    .music-name {
+                        width: 100px;
+                        height: 24px;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                    }
+
+                    .music-author {
+                        width: 100px;
+                        height: 24px;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                    }
+
+                    .music-time {
+                        font-size: 12px;
+                        color: #ddd;
+                    }
+                }
+            }
+        }
+    }
+}
+
+audio {
+    display: none;
+}
+
+// 动画函数
+@keyframes move {
+    form {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
