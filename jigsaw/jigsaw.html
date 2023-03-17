@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jigsaw</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        display: flex;
+        height: 100vh;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+      }
+
+      .container {
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+      }
+
+      .box {
+        width: 300px;
+        height: 300px;
+        margin-left: 100px;
+        margin-top: 50px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .box .row {
+        display: flex;
+        width: 300px;
+        height: 100px;
+        outline: 1px solid black;
+      }
+
+      .box .row .col {
+        width: 100px;
+        height: 100px;
+        /* background-color: yellow; */
+        outline: 1px solid black;
+      }
+
+      .box .row .col img {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .box2 {
+        /* margin-bottom: 50px; */
+      }
+
+      .img-box {
+        width: 300px;
+        height: 300px;
+        outline: 1px solid black;
+      }
+
+      .img-box img {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <p>游戏用时：<span>00</span></p>
+      <button>游戏开始</button>
+    </div>
+    <div class="container">
+      <div class="box">
+        <!-- <div class="row">
+            <div class="col" ondragover="over(event)" ondrop="drop(event)">
+                <img id="img1" src="./images/1.jpg" alt="" draggable="true" ondragstart="start(event)">
+            </div>
+            <div class="col" ondragover="over(event)" ondrop="drop(event)">
+                <img id="img2" src="./images/2.jpg" alt="" draggable="true" ondragstart="start(event)">
+            </div>
+            <div class="col" ondragover="over(event)" ondrop="drop(event)">
+                <img id="img3" src="./images/3.jpg" alt="" draggable="true" ondragstart="start(event)">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" ondragover="over(event)" ondrop="drop(event)">
+                <img id="img4" src="./images/4.jpg" alt="" draggable="true" ondragstart="start(event)">
+            </div>
+            <div class="col" ondragover="over(event)" ondrop="drop(event)">
+                <img id="img5" src="./images/5.jpg" alt="" draggable="true" ondragstart="start(event)">
+            </div>
+            <div class="col" ondragover="over(event)" ondrop="drop(event)">
+                <img id="img6" src="./images/6.jpg" alt="" draggable="true" ondragstart="start(event)">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" ondragover="over(event)" ondrop="drop(event)">
+                <img id="img7" src="./images/7.jpg" alt="" draggable="true" ondragstart="start(event)">
+            </div>
+            <div class="col" ondragover="over(event)" ondrop="drop(event)">
+                <img id="img8" src="./images/8.jpg" alt="" draggable="true" ondragstart="start(event)">
+            </div>
+            <div class="col" ondragover="over(event)" ondrop="drop(event)">
+                <img id="img9" src="./images/9.jpg" alt="" draggable="true" ondragstart="start(event)">
+            </div>
+        </div> -->
+      </div>
+      <div class="box2">
+        <p>目标</p>
+        <div class="img-box">
+          <img src="./images/1.png" alt="" draggable="false" />
+        </div>
+      </div>
+    </div>
+
+    <script src="./jquery.min.js"></script>
+    <script>
+      let startState = false;
+      let oldArr = [1, 2, 4, 5, 6, 7, 8, 3, 9];
+      function startGame() {
+        $(".box").empty();
+        // let arr = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        let b = [1, 2, 4, 5, 6, 7, 8, 3, 9];
+        function shuffle(array) {
+          array.sort(() => Math.random() - 0.5);
+        }
+        shuffle(b);
+        let arr = [];
+        let c = [];
+        b.forEach((item, index) => {
+          c.push(item);
+          if (c.length == 3) {
+            arr.push(c);
+            c = [];
+          }
+        });
+        let $box = $(".box");
+        arr.forEach((item) => {
+          let $row = $('<div class="row"></div>');
+          item.forEach((value) => {
+            let $col = $(
+              '<div class="col" ondragover="over(event)" ondrop="drop(event)"><img id="' +
+                value +
+                '" src="./images/' +
+                value +
+                '.jpg" alt="" draggable="true" ondragstart="start(event)"></div>'
+            );
+            $row.append($col);
+          });
+          $box.append($row);
+        });
+      }
+
+      function start(event) {
+        // console.log(startState);
+        if (!startState) {
+          alert("请开始游戏");
+        }
+        event.dataTransfer.setData("text/plain", event.target.id);
+      }
+      function over(event) {
+        event.preventDefault();
+      }
+      function drop(event) {
+        let id = event.dataTransfer.getData("text/plain");
+        let data = document.getElementById(id);
+        // 被拖拽图片的父亲
+        let a = data.cloneNode();
+        event.target.parentNode.replaceChild(a, event.target);
+        data.parentNode.replaceChild(event.target, data);
+        let newArr = [];
+        let item = document.querySelectorAll(".col img");
+        item.forEach((value) => {
+          newArr.push(Number(value.id));
+        });
+
+        setTimeout(() => {
+          if (JSON.stringify(oldArr) == JSON.stringify(newArr)) {
+            let $text = $("span").text();
+            alert("恭喜游戏通关,用时" + $text + "秒");
+            flag = false;
+            clearInterval(timer);
+            startState = !startState;
+            // console.log(startState);
+          }
+        }, 300);
+      }
+
+      startGame();
+
+      let $btn = $("button");
+      let timer = null;
+      $btn.click(() => {
+        // console.log(startState);
+        if (!startState) {
+          startState = true;
+          startGame();
+          time();
+        } else {
+          return;
+        }
+        // if (!flag) {
+        //   flag = true;
+        // }
+      });
+      let $span = $("span");
+      function time() {
+        $span.text("00");
+        let i = 0;
+        timer = setInterval(() => {
+          i++;
+
+          if (i < 10) {
+            i = "0" + i;
+          }
+          $span.text(i);
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>
